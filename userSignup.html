@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+        box-sizing: border-box;
+      }
+      .loginpop-up{
+        position: relative;
+        text-align: center;
+        width:100%;
+        display: none;
+      }
+      .logincontainer{
+        display: none;
+        position: fixed;
+        left: 600px;
+        top: 200px;
+        text-align: center;
+        background-color: rgba(65, 222, 225, 0.532);
+        padding: 20px;
+      }
+      .sign-upcontainer{
+        display: none;
+        position: fixed;
+        left: 600px;
+        top: 200px;
+        text-align: center;
+        background-color: rgba(65, 222, 225, 0.532);
+        padding: 20px;
+      }
+        #login,#signup{
+            border: none;
+            background-color: rgb(182, 237, 100) ;
+        }
+        nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: rgb(182, 237, 100);
+        }
+        body{
+        background-color: lightsalmon;
+        }
+        .logincontainer .cancel {
+        background-color: #cc0000;
+      }
+      .logincontainer .btn:hover,
+      #login:hover,#signup:hover {
+        opacity: 1;
+      }
+
+    </style>
+</head>
+<body>
+   <nav>
+    <img src="C:\Users\KAVYA\Downloads\quiz-hire-logo.fw_.png" height="70px" width="100px">
+    <h1>Quizz</h1>
+    <button id="login" onclick="login()">login</div>
+    <button id="signup" onclick="signup()">signup</div>
+   </nav> 
+    <div class="login" id="loginpop-up">
+        <form class="logincontainer" action="" id="loginform">
+            <label for="email">Email</label>
+            <input type="email" id="login-email" required><br><br>
+            <label for="password">Password</label>
+            <input type="password" id="login-password" required><br><br>
+            <button type="button" class="btn cancel" onclick="clearform('loginform')">cancel</button>
+            <button type="submit" class="btn">submit</button>
+        </form>
+    </div>
+    <div class="signup" id="signpop-up">
+        <form class="sign-upcontainer" action="" id="signupform" >
+            <label for="uname">UserName</label>
+            <input type="text" id="uname" required><br><br>
+            <label for="email">Email</label>
+            <input type="email" id="signup-email" required><br><br>
+            <label for="password">Password</label>
+            <input type="password" id="signup-password" required><br><br>
+            <button type="submit" class="btn " onclick="event.preventDefault();handleSignupSubmit()">submit</button>
+        </form>
+    </div>
+   <script>
+    function login(){
+      document.getElementById("signupform").style.display="none";
+        document.getElementById("loginform").style.display="block";
+    }
+
+    function signup(){ 
+        document.getElementById("loginform").style.display="none";
+        document.getElementById("signupform").style.display="block";
+    }
+
+    function handleSignupSubmit()
+    { 
+        let uname=document.querySelector("input[type=text]").value
+        let email=document.querySelector("input[type=email]").value;
+        let pass=document.querySelector("input[type=password]").value;
+        console.log(uname)
+        fetch("http://localhost:3000/api/auth/signup",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json;charset=UTF-8"},
+            body:JSON.stringify({
+                     username: uname,
+                    email: email,
+                    password:pass
+                }),
+          redirect: "follow",
+          referrerPolicy: "no-referrer",
+        }).then(e=>e.json()).
+        then(e=>{console.log(e);
+        alert(e.message)})
+        .catch((err)=>{console.log(err);
+        alert("invalid signup data")}) 
+    }
+   </script>
+</body>
+</html>
